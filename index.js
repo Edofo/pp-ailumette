@@ -109,10 +109,10 @@ async function IA() {
     nbrAllumettes = nbrAllumettes - nbrChiffre
 
     console.log("Au tour de l'IA")
-
     await sleep(3000);
 
-    if (nbrAllumettes == 0) {
+
+    if (nbrAllumettes <= 0) {
 
         console.log("Vous avez gagné !");
         display(map);
@@ -121,7 +121,7 @@ async function IA() {
         
     } else {
         
-        console.log(`L'IA a retiré ${nbrChiffre} allumettes`);
+        console.log(`L'IA a retirée ${nbrChiffre} allumettes`);
         console.log(`Il reste ${nbrAllumettes} allumettes`);
         display(map);
         Afficher()
