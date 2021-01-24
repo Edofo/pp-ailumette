@@ -22,6 +22,7 @@ async function Afficher() {
     } catch(e) {
         console.error("Un problème est survenue !")
     };
+    
 
     //IA qui supprime
     IA();
@@ -58,7 +59,6 @@ let map = [
 
 function Player() {
 
-    
     rl.question('Choisis une ligne : ', (valueOne) => {
         nbrLignes = parseInt(valueOne);
     
@@ -130,10 +130,11 @@ function Player() {
 async function IA() {
 
 
-    const nbrLignes = Math.floor(Math.random() * 3) +1 ;
+    const nbrLignes = Math.floor(Math.random() * 4) +1 ;
     const nbrChiffre = Math.floor(Math.random() * 3) +1 ;
 
-    console.log("1", nbrLignes);
+    console.log("ligne", nbrLignes);
+    console.log("chiffre", nbrChiffre);
 
     let stringsearch = "|"
     for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
@@ -142,14 +143,14 @@ async function IA() {
 
     console.log(count)
 
-    if (count >= nbrChiffre) {
+    if (count >= nbrChiffre || nbrAllumettes == 1) {
 
         console.log("Au tour de l'IA")
         await sleep(3000);
 
         nbrAllumettes = nbrAllumettes - nbrChiffre
 
-        await Game();
+        Game();
 
         if (nbrAllumettes <= 0) {
 
@@ -163,7 +164,7 @@ async function IA() {
             console.log(`L'IA a retirée ${nbrChiffre} allumettes`);
             console.log(`Il reste ${nbrAllumettes} allumettes`);
             display(map);
-            Afficher()
+            await Afficher();
             return; 
         }
 
