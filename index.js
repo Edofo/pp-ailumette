@@ -1,6 +1,5 @@
+const { count } = require('console');
 const readline = require('readline');
-
-const map = require('./map');
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -10,19 +9,20 @@ const rl = readline.createInterface({
 
 // Initialisé le nombre d'allumettes
 let nbrAllumettes = 16;
-
+let increment = 0;
 
 async function Afficher() {
     
-    display(map);
     
     //Dire à la personne de choisir ou supprimer et le nombre 1 à 3 allumettes
     try {
+        console.log('A votre tour !');
+        await sleep(1000);
         return await Player();
     } catch(e) {
         console.error("Un problème est survenue !")
     };
-    
+
     //IA qui supprime
     IA();
 
@@ -45,9 +45,20 @@ function sleep(ms) {
     });
   }   
 
+    
+let map = [
+    /* 0 */['*', '*', '*', '*', '*', '*', '*', '*', '*'],
+    /* 1 */['*', ' ', ' ', ' ', '|', ' ', ' ', ' ', '*'],
+    /* 2 */['*', ' ', ' ', '|', '|', '|', ' ', ' ', '*'],
+    /* 3 */['*', ' ', '|', '|', '|', '|', '|', ' ', '*'],
+    /* 4 */['*', '|', '|', '|', '|', '|', '|', '|', '*'],
+    /* 5 */['*', '*', '*', '*', '*', '*', '*', '*', '*']
+];
+
+
 function Player() {
 
-    console.log('A votre tour !')
+    
     rl.question('Choisis une ligne : ', (valueOne) => {
         nbrLignes = parseInt(valueOne);
     
@@ -58,26 +69,40 @@ function Player() {
             nbrChiffre = parseInt(valueTwo);
             
             if (nbrChiffre <= 3 && nbrChiffre >= 1) {
+
+                let stringsearch = "|"
+                for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
+                
+                var count = count;
+
+                if (count >= nbrChiffre) {
     
-                if (nbrChiffre <= nbrAllumettes) {
-    
-                    console.log(`Chiffre ${nbrChiffre} confirmé`);
-                    
-                    nbrAllumettes = nbrAllumettes - nbrChiffre
+                    if (nbrChiffre <= nbrAllumettes) {
+        
+                        console.log(`Chiffre ${nbrChiffre} confirmé`);
+                        
+                        nbrAllumettes = nbrAllumettes - nbrChiffre
 
-                    if (nbrAllumettes == 0) {
+                        Game();
 
-                        console.log("Vous avez perdu");
-                        display(map);
-                        rl.close();
-                        return; 
+                        if (nbrAllumettes == 0) {
 
+                            console.log("Vous avez perdu");
+                            display(map);
+                            rl.close();
+                            return; 
+
+                        } else {
+
+                            console.log(`Il reste ${nbrAllumettes} allumettes`);
+                            display(map);
+                            IA()
+                            return; 
+                        }
                     } else {
-
-                        console.log(`Il reste ${nbrAllumettes} allumettes`);
-                        display(map);
-                        IA()
-                        return; 
+                        console.error(`Erreur : Il n\'y a pas assez d\'allumettes (il y a que ${count} allumettes`)
+                        Player();
+                        return;
                     }
     
                 } else {
@@ -104,27 +129,68 @@ function Player() {
 
 async function IA() {
 
+
+    const nbrLignes = Math.floor(Math.random() * 3) +1 ;
     const nbrChiffre = Math.floor(Math.random() * 3) +1 ;
 
-    nbrAllumettes = nbrAllumettes - nbrChiffre
+    console.log("1", nbrLignes);
 
-    console.log("Au tour de l'IA")
-    await sleep(3000);
+    let stringsearch = "|"
+    for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
+    
+    var count = count;
 
+    console.log(count)
 
-    if (nbrAllumettes <= 0) {
+    if (count >= nbrChiffre) {
 
-        console.log("Vous avez gagné !");
-        display(map);
-        rl.close();
-        return; 
-        
+        console.log("Au tour de l'IA")
+        await sleep(3000);
+
+        nbrAllumettes = nbrAllumettes - nbrChiffre
+
+        await Game();
+
+        if (nbrAllumettes <= 0) {
+
+            console.log("Vous avez gagné !");
+            display(map);
+            rl.close();
+            return; 
+            
+        } else {
+            
+            console.log(`L'IA a retirée ${nbrChiffre} allumettes`);
+            console.log(`Il reste ${nbrAllumettes} allumettes`);
+            display(map);
+            Afficher()
+            return; 
+        }
+
     } else {
-        
-        console.log(`L'IA a retirée ${nbrChiffre} allumettes`);
-        console.log(`Il reste ${nbrAllumettes} allumettes`);
-        display(map);
-        Afficher()
-        return; 
+        IA();
     }
 };
+
+function Game() {
+    for (var i = 0; i < map[nbrLignes].length; i++) {
+
+        if (map[nbrLignes][i].indexOf('|') != -1) {
+    
+            if (map[nbrLignes][i] == '|') {
+    
+                map[nbrLignes][i] = map[nbrLignes][i].replace('|', ' ');
+    
+                function Counter() {
+                    increment++;
+                }
+    
+                Counter();
+    
+                if (increment === nbrChiffre) {
+                    break;
+                }
+            }
+        }
+    }
+}
