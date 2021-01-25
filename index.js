@@ -1,4 +1,3 @@
-const { count } = require('console');
 const readline = require('readline');
 
 const rl = readline.createInterface({
@@ -10,6 +9,7 @@ const rl = readline.createInterface({
 // Initialisé le nombre d'allumettes
 let nbrAllumettes = 16;
 let increment = 0;
+
 
 async function Afficher() {
     
@@ -44,7 +44,7 @@ function sleep(ms) {
     return new Promise((resolve) => {
       setTimeout(resolve, ms);
     });
-  }   
+}   
 
     
 let map = [
@@ -100,13 +100,13 @@ function Player() {
                             return; 
                         }
                     } else {
-                        console.error(`Erreur : Il n\'y a pas assez d\'allumettes (il y a que ${count} allumettes`)
+                        console.error(`Erreur : Il n\'y a pas assez d\'allumettes`)
                         Player();
                         return;
                     }
     
                 } else {
-                    console.error('Erreur : Il n\'y a pas assez d\'allumettes');
+                    console.error(`Erreur : Il n\'y a pas assez d\'allumettes (il y a que ${count} allumettes)`);
                     Player();
                     return;  
                 }
@@ -131,26 +131,47 @@ async function IA() {
 
 
     const nbrLignes = Math.floor(Math.random() * 4) +1 ;
-    const nbrChiffre = Math.floor(Math.random() * 3) +1 ;
-
-    console.log("ligne", nbrLignes);
-    console.log("chiffre", nbrChiffre);
+    let nbrChiffre = 0;
 
     let stringsearch = "|"
     for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
     
     var count = count;
 
-    console.log(count)
+    if (count <= 3 && count >= 1) {
+        nbrChiffre = Math.floor(Math.random() * count) +1 ;
+    } else {
+        nbrChiffre = Math.floor(Math.random() * 3) +1 ;
+    }
 
-    if (count >= nbrChiffre || nbrAllumettes == 1) {
+    if (count >= nbrChiffre) {
 
         console.log("Au tour de l'IA")
         await sleep(3000);
 
         nbrAllumettes = nbrAllumettes - nbrChiffre
 
-        Game();
+        for (var i = 0; i < map[nbrLignes].length; i++) {
+
+            if (map[nbrLignes][i].indexOf('|') != -1) {
+        
+                if (map[nbrLignes][i] == '|') {
+        
+                    map[nbrLignes][i] = map[nbrLignes][i].replace('|', ' ');
+        
+                    function Counter() {
+                        increment++;
+                    }
+        
+                    Counter();  
+        
+                    if (increment === nbrChiffre) {
+                        increment = 0;
+                        break;
+                    }
+                }
+            }
+        }
 
         if (nbrAllumettes <= 0) {
 
@@ -186,9 +207,10 @@ function Game() {
                     increment++;
                 }
     
-                Counter();
+                Counter();  
     
                 if (increment === nbrChiffre) {
+                    increment = 0;
                     break;
                 }
             }
