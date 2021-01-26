@@ -302,8 +302,6 @@ async function IA() {
                 case 0:
                     IA();
                     break;
-                default:
-                    console.error("Un problème est survenu !")
             }
         }
 
@@ -400,8 +398,6 @@ async function HardIA() {
                     case 1: case 0:
                         HardIA();
                         break;
-                    default:
-                        console.error("Un problème est survenu !");
                 }
             case 4:
                 switch (count) {
@@ -431,8 +427,6 @@ async function HardIA() {
                     case 0:
                         HardIA();
                         break;
-                    default:
-                        console.error("Un problème est survenu !");
                 }
             case 3:
                 switch (count) {
@@ -443,12 +437,12 @@ async function HardIA() {
                         for (x = 0; x < 5; x++) {
 
                             let stringsearch = "|"
-                            for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[x][i++])) {
+                            for (var i = a = 0; i < map[0].length; a +=+ (stringsearch === map[x][i++])) {
                                 
-                                var count = count
+                                var a = a
                             }
                     
-                            if (count >= 2) {
+                            if (a >= 2) {
                                 HardIA();
                             } else {
                                 nbrChiffre = 1;
@@ -459,11 +453,7 @@ async function HardIA() {
                     case 0:
                         HardIA();
                         break;
-                    default:
-                        console.error("Un problème est survenu !");
                 }
-            default:
-                console.error("Un problème est survenu !");
         }
 
         if (count >= nbrChiffre) {
