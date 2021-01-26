@@ -9,12 +9,29 @@ const rl = readline.createInterface({
 // Initialisé le nombre d'allumettes
 let nbrAllumettes = 16;
 let increment = 0;
-
+let difficulty = 0;
 
 async function Afficher() {
+
+    rl.question('Choisis une difficulté (1 = Facile / 2 = Normal / 3 = Difficile) : ', (value) => {
+
+        difficulty = value
     
-    
-    //Dire à la personne de choisir ou supprimer et le nombre 1 à 3 allumettes
+        if (difficulty <= 3 && difficulty >= 1) {
+
+            Jeu();
+
+        } else {
+            Afficher();
+        }
+    });
+
+};
+
+Afficher();
+
+async function Jeu() {
+                
     try {
         console.log('A votre tour !');
         await sleep(1000);
@@ -22,14 +39,8 @@ async function Afficher() {
     } catch(e) {
         console.error("Un problème est survenue !")
     };
-    
-
-    //IA qui supprime
-    IA();
-
-};
-
-Afficher()
+        
+}
 
 
 function display(values) {
@@ -96,7 +107,20 @@ function Player() {
 
                             console.log(`Il reste ${nbrAllumettes} allumettes`);
                             display(map);
-                            IA()
+
+                            switch (difficulty) {
+                                case '1' :
+                                    EasyIA();
+                                    break;
+                                case '2' :
+                                    IA();
+                                    break;
+                                case '3' :
+                                    HardIA();
+                                    break;
+                                default:
+                                    console.error("Un problème est survenue !");
+                            }
                             return; 
                         }
                     } else {
@@ -127,7 +151,7 @@ function Player() {
     });
 };
 
-async function IA() {
+async function EasyIA() {
 
 
     const nbrLignes = Math.floor(Math.random() * 4) +1 ;
@@ -185,12 +209,12 @@ async function IA() {
             console.log(`L'IA a retirée ${nbrChiffre} allumettes`);
             console.log(`Il reste ${nbrAllumettes} allumettes`);
             display(map);
-            await Afficher();
+            await Jeu();
             return; 
         }
 
     } else {
-        IA();
+        EasyIA();
     }
 };
 
