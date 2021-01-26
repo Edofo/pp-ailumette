@@ -361,21 +361,21 @@ async function HardIA() {
 
     if (count >= 1) {
         switch (nbrAllumettes) {
-            case 15: case 13: case 11: case 9: case 7: case 5: case 3: case 1:
+            case 15: case 13: case 11: case 9: case 7: case 5: case 4: case 1:
                 if (count >= 3) {
                     nbrChiffre = 3;
                 } else {
                     nbrChiffre = 1;
                 }
                 break;
-            case 14: case 12: case 10: case 8: case 6: case 4:
+            case 14: case 12: case 10: case 8: case 3:
                 if (count >= 2) {
                     nbrChiffre = 2;
                 } else {
                     nbrChiffre = 1;
                 }
                 break;
-            case 2:
+            case 6: case 2:
                 nbrChiffre = 1;
             default:
                 console.error("Un problème est survenu !");
