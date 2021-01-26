@@ -22,6 +22,7 @@ async function Afficher() {
             Jeu();
 
         } else {
+            console.error("Erreur : Vous devez choisir une difficulté entre 1 et 3")
             Afficher();
         }
     });
@@ -152,7 +153,6 @@ function Player() {
 };
 
 async function EasyIA() {
-
 
     const nbrLignes = Math.floor(Math.random() * 4) +1 ;
     let nbrChiffre = 0;
