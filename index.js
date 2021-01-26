@@ -47,7 +47,7 @@ async function Jeu() {
                 
     try {
         console.log('A votre tour !');
-        await sleep(1000);
+        await sleep(500);
         return await Player();
     } catch(e) {
         console.error("Un problème est survenue !")
@@ -279,14 +279,28 @@ async function IA() {
         } else {
 
             switch (count) {
+                case 3: case 2:
+                    nbrChiffre = 2;
+                    break;
                 case 1:
-                    nbrChiffre = Math.floor(Math.random() * 1) +1 ;
+                    for (x = 0; x < 5; x++) {
+
+                        let stringsearch = "|"
+                        for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[x][i++])) {
+                            
+                            var count = count
+                        }
+                
+                        if (count >= 2) {
+                            IA();
+                        } else {
+                            nbrChiffre = 1;
+                        }
+                        
+                    }
                     break;
-                case 2:
-                    nbrChiffre = Math.floor(Math.random() * 1) +1 ;
-                    break;
-                case 3:
-                    nbrChiffre = Math.floor(Math.random() * 2) +1 ;
+                case 0:
+                    IA();
                     break;
                 default:
                     console.error("Un problème est survenu !")
@@ -361,14 +375,14 @@ async function HardIA() {
 
     if (count >= 1) {
         switch (nbrAllumettes) {
-            case 15: case 13: case 11: case 9: case 7: case 5: case 4: case 1:
+            case 15: case 13: case 11: case 9: case 7: case 1:
                 if (count >= 3) {
                     nbrChiffre = 3;
                 } else {
                     nbrChiffre = 1;
                 }
                 break;
-            case 14: case 12: case 10: case 8: case 3:
+            case 14: case 12: case 10: case 8:
                 if (count >= 2) {
                     nbrChiffre = 2;
                 } else {
@@ -377,6 +391,77 @@ async function HardIA() {
                 break;
             case 6: case 2:
                 nbrChiffre = 1;
+                break;
+            case 5:
+                switch (count) {
+                    case 5: case 4: case 3: case 2:
+                        nbrChiffre = 1;
+                        break;
+                    case 1: case 0:
+                        HardIA();
+                        break;
+                    default:
+                        console.error("Un problème est survenu !");
+                }
+            case 4:
+                switch (count) {
+                    case 4: case 3:
+                        nbrChiffre = 3;
+                        break;
+                    case 2:
+                        nbrChiffre = 1;
+                        break;
+                    case 1:
+                        for (x = 0; x < 5; x++) {
+
+                            let stringsearch = "|"
+                            for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[x][i++])) {
+                                
+                                var count = count
+                            }
+                    
+                            if (count >= 2) {
+                                HardIA();
+                            } else {
+                                nbrChiffre = 1;
+                            }
+                            
+                        }
+                        break;
+                    case 0:
+                        HardIA();
+                        break;
+                    default:
+                        console.error("Un problème est survenu !");
+                }
+            case 3:
+                switch (count) {
+                    case 3: case 2:
+                        nbrChiffre = 2;
+                        break;
+                    case 1:
+                        for (x = 0; x < 5; x++) {
+
+                            let stringsearch = "|"
+                            for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[x][i++])) {
+                                
+                                var count = count
+                            }
+                    
+                            if (count >= 2) {
+                                HardIA();
+                            } else {
+                                nbrChiffre = 1;
+                            }
+                            
+                        }
+                        break;
+                    case 0:
+                        HardIA();
+                        break;
+                    default:
+                        console.error("Un problème est survenu !");
+                }
             default:
                 console.error("Un problème est survenu !");
         }
