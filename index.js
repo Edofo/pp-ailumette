@@ -5,9 +5,7 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-
-// Initialisé le nombre d'allumettes
-let nbrAllumettes = 16;
+let nbrAllumettes = 0;
 let increment = 0;
 let difficulty = 0;
 
@@ -18,6 +16,18 @@ async function Afficher() {
         difficulty = value
     
         if (difficulty <= 3 && difficulty >= 1) {
+
+            for (x = 0; x < 5; x++) {
+
+                let stringsearch = "|"
+                for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[x][i++])) {
+                    
+                    var count = count
+                }
+        
+                nbrAllumettes = nbrAllumettes + count
+                
+            }
 
             Jeu();
 
@@ -32,6 +42,8 @@ async function Afficher() {
 Afficher();
 
 async function Jeu() {
+
+    display(map);
                 
     try {
         console.log('A votre tour !');
@@ -83,7 +95,7 @@ function Player() {
             if (nbrChiffre <= 3 && nbrChiffre >= 1) {
 
                 let stringsearch = "|"
-                for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
+                for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
                 
                 var count = count;
 
@@ -120,7 +132,7 @@ function Player() {
                                     HardIA();
                                     break;
                                 default:
-                                    console.error("Un problème est survenue !");
+                                    console.error("Un problème est survenu !");
                             }
                             return; 
                         }
@@ -152,13 +164,38 @@ function Player() {
     });
 };
 
+function Game() {
+    for (let i = 0; i < map[nbrLignes].length; i++) {
+
+        if (map[nbrLignes][i].indexOf('|') != -1) {
+    
+            if (map[nbrLignes][i] == '|') {
+    
+                map[nbrLignes][i] = map[nbrLignes][i].replace('|', ' ');
+    
+                function Counter() {
+                    increment++;
+                }
+    
+                Counter();  
+    
+                if (increment === nbrChiffre) {
+                    increment = 0;
+                    break;
+                }
+            }
+        }
+    }
+}
+
+
 async function EasyIA() {
 
     const nbrLignes = Math.floor(Math.random() * 4) +1 ;
     let nbrChiffre = 0;
 
     let stringsearch = "|"
-    for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
+    for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
     
     var count = count;
 
@@ -175,7 +212,7 @@ async function EasyIA() {
 
         nbrAllumettes = nbrAllumettes - nbrChiffre
 
-        for (var i = 0; i < map[nbrLignes].length; i++) {
+        for (let i = 0; i < map[nbrLignes].length; i++) {
 
             if (map[nbrLignes][i].indexOf('|') != -1) {
         
@@ -208,36 +245,192 @@ async function EasyIA() {
             
             console.log(`L'IA a retirée ${nbrChiffre} allumettes`);
             console.log(`Il reste ${nbrAllumettes} allumettes`);
-            display(map);
             await Jeu();
             return; 
         }
 
     } else {
         EasyIA();
+        return;
     }
 };
 
-function Game() {
-    for (var i = 0; i < map[nbrLignes].length; i++) {
 
-        if (map[nbrLignes][i].indexOf('|') != -1) {
+async function IA() {
+
+    const nbrLignes = Math.floor(Math.random() * 4) +1 ;
+    let nbrChiffre = 0;
+
+    let stringsearch = "|"
+    for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
     
-            if (map[nbrLignes][i] == '|') {
-    
-                map[nbrLignes][i] = map[nbrLignes][i].replace('|', ' ');
-    
-                function Counter() {
-                    increment++;
-                }
-    
-                Counter();  
-    
-                if (increment === nbrChiffre) {
-                    increment = 0;
+    var count = count;
+
+    if (count > 0) {
+
+        if (nbrAllumettes > 3) {
+
+            if (count <= 3) {
+                nbrChiffre = Math.floor(Math.random() * count) +1 ;
+            } else {
+                nbrChiffre = Math.floor(Math.random() * 3) +1 ;
+            }
+
+        } else {
+
+            switch (count) {
+                case 1:
+                    nbrChiffre = Math.floor(Math.random() * 1) +1 ;
                     break;
-                }
+                case 2:
+                    nbrChiffre = Math.floor(Math.random() * 1) +1 ;
+                    break;
+                case 3:
+                    nbrChiffre = Math.floor(Math.random() * 2) +1 ;
+                    break;
+                default:
+                    console.error("Un problème est survenu !")
             }
         }
+
+        if (count >= nbrChiffre) {
+
+            console.log("Au tour de l'IA")
+            await sleep(3000);
+
+            nbrAllumettes = nbrAllumettes - nbrChiffre
+
+            for (let i = 0; i < map[nbrLignes].length; i++) {
+
+                if (map[nbrLignes][i].indexOf('|') != -1) {
+            
+                    if (map[nbrLignes][i] == '|') {
+            
+                        map[nbrLignes][i] = map[nbrLignes][i].replace('|', ' ');
+            
+                        function Counter() {
+                            increment++;
+                        }
+            
+                        Counter();  
+            
+                        if (increment === nbrChiffre) {
+                            increment = 0;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (nbrAllumettes <= 0) {
+
+                console.log("Vous avez gagné !");
+                display(map);
+                rl.close();
+                return; 
+                
+            } else {
+                
+                console.log(`L'IA a retirée ${nbrChiffre} allumettes`);
+                console.log(`Il reste ${nbrAllumettes} allumettes`);
+                await Jeu();
+                return; 
+            }
+        
+        } else {
+            IA();
+            return;
+        }
+
+    } else {
+        IA();
+        return;
     }
-}
+};
+
+
+async function HardIA() {
+
+    const nbrLignes = Math.floor(Math.random() * 4) +1 ;
+    let nbrChiffre = 0;
+
+    let stringsearch = "|"
+    for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
+    
+    var count = count;
+
+    if (count >= 1) {
+        switch (nbrAllumettes) {
+            case 15: case 13: case 11: case 9: case 7: case 5: case 3: case 1:
+                if (count >= 3) {
+                    nbrChiffre = 3;
+                } else {
+                    nbrChiffre = 1;
+                }
+                break;
+            case 14: case 12: case 10: case 8: case 6: case 4:
+                if (count >= 2) {
+                    nbrChiffre = 2;
+                } else {
+                    nbrChiffre = 1;
+                }
+                break;
+            case 2:
+                nbrChiffre = 1;
+            default:
+                console.error("Un problème est survenu !");
+        }
+
+        if (count >= nbrChiffre) {
+
+            console.log("Au tour de l'IA")
+            await sleep(3000);
+
+            nbrAllumettes = nbrAllumettes - nbrChiffre
+
+            for (let i = 0; i < map[nbrLignes].length; i++) {
+
+                if (map[nbrLignes][i].indexOf('|') != -1) {
+            
+                    if (map[nbrLignes][i] == '|') {
+            
+                        map[nbrLignes][i] = map[nbrLignes][i].replace('|', ' ');
+            
+                        function Counter() {
+                            increment++;
+                        }
+            
+                        Counter();  
+            
+                        if (increment === nbrChiffre) {
+                            increment = 0;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (nbrAllumettes <= 0) {
+
+                console.log("Vous avez gagné !");
+                display(map);
+                rl.close();
+                return; 
+                
+            } else {
+                
+                console.log(`L'IA a retirée ${nbrChiffre} allumettes`);
+                console.log(`Il reste ${nbrAllumettes} allumettes`);
+                await Jeu();
+                return; 
+            }
+        } else {
+            HardIA();
+            return;
+        }
+
+    } else {
+        HardIA();
+        return;
+    }
+};
