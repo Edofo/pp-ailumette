@@ -1,15 +1,12 @@
-const Jeu = require('./Game');
+const Game = require('./core/Game');
+
+const Display = require('./core/Display');
 
 const readline = require('readline');
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
 let nbrAllumettes = 0;
-let increment = 0;
 let difficulty = 0;
+let count = 0;
 
 let map = [
     /* 0 */['*', '*', '*', '*', '*', '*', '*', '*', '*'],
@@ -20,15 +17,15 @@ let map = [
     /* 5 */['*', '*', '*', '*', '*', '*', '*', '*', '*']
 ];
 
-function display(values) {
-    const rows = values.length
 
-    for (let x = 0; x < rows; x++) {
-        console.log(map[x].join(''))
-    }
-}
 
 async function Afficher() {
+
+    
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
 
     rl.question('Choisis une difficulté (1 = Facile / 2 = Normal / 3 = Difficile) : ', (value) => {
 
@@ -39,16 +36,18 @@ async function Afficher() {
             for (x = 0; x < 5; x++) {
 
                 let stringsearch = "|"
-                for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[x][i++])) {
+                for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[x][i++])) {
                     
-                    var count = count
+                    count = count
                 }
         
                 nbrAllumettes = nbrAllumettes + count
                 
             }
 
-            Jeu();
+            rl.close();
+
+            Game();
 
         } else {
             console.error("Erreur : Vous devez choisir une difficulté entre 1 et 3")

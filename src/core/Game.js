@@ -1,12 +1,15 @@
 const Player = require('./Player');
 
+
 function sleep(ms) {
     return new Promise((resolve) => {
       setTimeout(resolve, ms);
     });
 } 
 
-module.exports = async function Jeu() {
+
+
+module.exports = async function Game() {
 
     try {
         console.log('A votre tour !');

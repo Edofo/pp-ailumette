@@ -1,8 +1,21 @@
-const EasyIA = require('./ia/EasyIA');
-const IA = require('./ia/IA');
-const HardIA = require('./ia/HardIA');
+const EasyIA = require('./ia/Easy');
+const IA = require('./ia/Medium');
+const HardIA = require('./ia/Hard');
+
+const readline = require('readline');
+
+
+let increment = 0;
+
 
 module.exports = async function Player() {
+
+    
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
 
     rl.question('Choisis une ligne : ', (valueOne) => {
         nbrLignes = parseInt(valueOne);

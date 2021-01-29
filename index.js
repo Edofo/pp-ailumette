@@ -8,6 +8,7 @@ const rl = readline.createInterface({
 let nbrAllumettes = 0;
 let increment = 0;
 let difficulty = 0;
+let count = 0;
 
 async function Afficher() {
 
@@ -20,9 +21,9 @@ async function Afficher() {
             for (x = 0; x < 5; x++) {
 
                 let stringsearch = "|"
-                for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[x][i++])) {
+                for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[x][i++])) {
                     
-                    var count = count
+                    count = count
                 }
         
                 nbrAllumettes = nbrAllumettes + count
