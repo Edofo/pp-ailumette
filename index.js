@@ -96,9 +96,9 @@ function Player() {
             if (nbrChiffre <= 3 && nbrChiffre >= 1) {
 
                 let stringsearch = "|"
-                for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
+                for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
                 
-                var count = count;
+                count = count;
 
                 if (count >= nbrChiffre) {
     
