@@ -189,7 +189,7 @@ function Game() {
 
 async function EasyIA() {
 
-    const Ligne = Math.floor(Math.random() * 4) +1 ;
+    const Ligne = Math.floor(Math.random() * 4) + 1;
     let Number = 0;
 
     let stringsearch = "|"
@@ -197,10 +197,16 @@ async function EasyIA() {
     
     count = count;
 
-    if (count <= 3 && count >= 1) {
-        Number = Math.floor(Math.random() * count) +1 ;
-    } else {
-        Number = Math.floor(Math.random() * 3) +1 ;
+    switch (count) {
+        case 7: case 6: case 5: case 4: case 3:
+            Number = Math.floor(Math.random() * 3) + 1;
+            break;
+        case 2: case 1:
+            Number = Math.floor(Math.random() * count) + 1;
+            break;
+        case 0:
+            EasyIA();
+            break;
     }
 
     if (count >= Number) {
@@ -253,7 +259,7 @@ async function EasyIA() {
 
 async function MediumIA() {
 
-    const Ligne = Math.floor(Math.random() * 4) +1 ;
+    const Ligne = Math.floor(Math.random() * 4) + 1;
     let Number = 0;
 
     let stringsearch = "|"
@@ -266,9 +272,9 @@ async function MediumIA() {
         if (Ailumettes > 5) {
 
             if (count <= 3) {
-                Number = Math.floor(Math.random() * count) +1 ;
+                Number = Math.floor(Math.random() * count) + 1;
             } else {
-                Number = Math.floor(Math.random() * 3) +1 ;
+                Number = Math.floor(Math.random() * 3) + 1;
             }
 
         } else {
@@ -423,7 +429,7 @@ async function MediumIA() {
 
 async function HardIA() {
 
-    const Ligne = Math.floor(Math.random() * 4) +1 ;
+    const Ligne = Math.floor(Math.random() * 4) + 1;
     let Number = 0;
 
     let stringsearch = "|"
