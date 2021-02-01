@@ -5,7 +5,7 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-let nbrAllumettes = 0;
+let Ailumettes = 0;
 let increment = 0;
 let difficulty = 0;
 let count = 0;
@@ -26,7 +26,7 @@ async function Afficher() {
                     count = count
                 }
         
-                nbrAllumettes = nbrAllumettes + count
+                Ailumettes = Ailumettes + count
                 
             }
 
@@ -85,32 +85,32 @@ let map = [
 function Player() {
 
     rl.question('Choisis une ligne : ', (valueOne) => {
-        nbrLignes = parseInt(valueOne);
+        Ligne = parseInt(valueOne);
     
-        if (nbrLignes <= 4 && nbrLignes >= 1) {
-            console.log(`Ligne ${nbrLignes} confirmée`);
+        if (Ligne <= 4 && Ligne >= 1) {
+            console.log(`Ligne ${Ligne} confirmée`);
     
             rl.question('Choisis un chiffre : ', (valueTwo) => {
-            nbrChiffre = parseInt(valueTwo);
+            Number = parseInt(valueTwo);
             
-            if (nbrChiffre <= 3 && nbrChiffre >= 1) {
+            if (Number <= 3 && Number >= 1) {
 
                 let stringsearch = "|"
-                for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
+                for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[Ligne][i++]));
                 
                 count = count;
 
-                if (count >= nbrChiffre) {
+                if (count >= Number) {
     
-                    if (nbrChiffre <= nbrAllumettes) {
+                    if (Number <= Ailumettes) {
         
-                        console.log(`Chiffre ${nbrChiffre} confirmé`);
+                        console.log(`Chiffre ${Number} confirmé`);
                         
-                        nbrAllumettes = nbrAllumettes - nbrChiffre
+                        Ailumettes = Ailumettes - Number
 
                         Game();
 
-                        if (nbrAllumettes == 0) {
+                        if (Ailumettes == 0) {
 
                             console.log("Vous avez perdu");
                             display(map);
@@ -119,7 +119,7 @@ function Player() {
 
                         } else {
 
-                            console.log(`Il reste ${nbrAllumettes} allumettes`);
+                            console.log(`Il reste ${Ailumettes} allumette(s)`);
                             display(map);
 
                             switch (difficulty) {
@@ -127,7 +127,7 @@ function Player() {
                                     EasyIA();
                                     break;
                                 case '2' :
-                                    IA();
+                                    MediumIA();
                                     break;
                                 case '3' :
                                     HardIA();
@@ -166,24 +166,21 @@ function Player() {
 };
 
 function Game() {
-    for (let i = 0; i < map[nbrLignes].length; i++) {
+    for (let i = 0; i < map[Ligne].length; i++) {
 
-        if (map[nbrLignes][i].indexOf('|') != -1) {
-    
-            if (map[nbrLignes][i] == '|') {
-    
-                map[nbrLignes][i] = map[nbrLignes][i].replace('|', ' ');
-    
-                function Counter() {
-                    increment++;
-                }
-    
-                Counter();  
-    
-                if (increment === nbrChiffre) {
-                    increment = 0;
-                    break;
-                }
+        if (map[Ligne][i].indexOf('|') != -1) {
+        
+            map[Ligne][i] = map[Ligne][i].replace('|', ' ');
+
+            function Counter() {
+                increment++;
+            }
+
+            Counter();  
+
+            if (increment === Number) {
+                increment = 0;
+                break;
             }
         }
     }
@@ -192,51 +189,50 @@ function Game() {
 
 async function EasyIA() {
 
-    const nbrLignes = Math.floor(Math.random() * 4) +1 ;
-    let nbrChiffre = 0;
+    const Ligne = Math.floor(Math.random() * 4) +1 ;
+    let Number = 0;
 
     let stringsearch = "|"
-    for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
+    for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[Ligne][i++]));
     
-    var count = count;
+    count = count;
 
     if (count <= 3 && count >= 1) {
-        nbrChiffre = Math.floor(Math.random() * count) +1 ;
+        Number = Math.floor(Math.random() * count) +1 ;
     } else {
-        nbrChiffre = Math.floor(Math.random() * 3) +1 ;
+        Number = Math.floor(Math.random() * 3) +1 ;
     }
 
-    if (count >= nbrChiffre) {
+    if (count >= Number) {
 
         console.log("Au tour de l'IA")
         await sleep(3000);
 
-        nbrAllumettes = nbrAllumettes - nbrChiffre
+        Ailumettes = Ailumettes - Number
 
-        for (let i = 0; i < map[nbrLignes].length; i++) {
+        for (let i = 0; i < map[Ligne].length; i++) {
 
-            if (map[nbrLignes][i].indexOf('|') != -1) {
-        
-                if (map[nbrLignes][i] == '|') {
-        
-                    map[nbrLignes][i] = map[nbrLignes][i].replace('|', ' ');
-        
-                    function Counter() {
-                        increment++;
-                    }
-        
-                    Counter();  
-        
-                    if (increment === nbrChiffre) {
-                        increment = 0;
-                        break;
-                    }
+            if (map[Ligne][i].indexOf('|') != -1) {
+            
+                map[Ligne][i] = map[Ligne][i].replace('|', ' ');
+    
+                function Counter() {
+                    increment++;
+                }
+    
+                Counter();  
+    
+                if (increment === Number) {
+                    increment = 0;
+                    break;
                 }
             }
         }
 
-        if (nbrAllumettes <= 0) {
+        if (Ailumettes <= 0) {
 
+            console.log(`L'IA a retirée ${Number} allumettes`);
+            console.log(`Il reste ${Ailumettes} allumette(s)`);
             console.log("Vous avez gagné !");
             display(map);
             rl.close();
@@ -244,82 +240,147 @@ async function EasyIA() {
             
         } else {
             
-            console.log(`L'IA a retirée ${nbrChiffre} allumettes`);
-            console.log(`Il reste ${nbrAllumettes} allumettes`);
+            console.log(`L'IA a retirée ${Number} allumettes`);
+            console.log(`Il reste ${Ailumettes} allumette(s)`);
             await Jeu();
-            return; 
         }
 
     } else {
         EasyIA();
-        return;
     }
 };
 
 
-async function IA() {
+async function MediumIA() {
 
-    const nbrLignes = Math.floor(Math.random() * 4) +1 ;
-    let nbrChiffre = 0;
+    const Ligne = Math.floor(Math.random() * 4) +1 ;
+    let Number = 0;
 
     let stringsearch = "|"
-    for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
+    for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[Ligne][i++]));
     
-    var count = count;
+    count = count;
 
     if (count > 0) {
 
-        if (nbrAllumettes > 3) {
+        if (Ailumettes > 5) {
 
             if (count <= 3) {
-                nbrChiffre = Math.floor(Math.random() * count) +1 ;
+                Number = Math.floor(Math.random() * count) +1 ;
             } else {
-                nbrChiffre = Math.floor(Math.random() * 3) +1 ;
+                Number = Math.floor(Math.random() * 3) +1 ;
             }
 
         } else {
 
-            switch (count) {
-                case 3: case 2:
-                    nbrChiffre = 2;
+            switch (Ailumettes) {
+                case 5:
+                    switch (count) {
+                        case 5: case 4: case 2:
+                            Number = 1;
+                            break;
+                        case 3:
+                            Number = 2;
+                            break;
+                        case 1: case 0:
+                            HardIA();
+                            break;
+                    }
+                    break;
+                case 4:
+                    switch (count) {
+                        case 4: case 3:
+                            Number = 3;
+                            break;
+                        case 2:
+                            Number = 1;
+                            break;
+                        case 1:
+                            for (x = 0; x < 5; x++) {
+
+                                let stringsearch = "|"
+                                for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[x][i++])) {
+                                    
+                                    count = count
+                                }
+                        
+                                if (count >= 2) {
+                                    HardIA();
+                                } else {
+                                    Number = 1;
+                                }
+                                
+                            }
+                            break;
+                        case 0:
+                            HardIA();
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch (count) {
+                        case 3: case 2:
+                            Number = 2;
+                            break;
+                        case 1:
+                            for (x = 0; x < 5; x++) {
+    
+                                let stringsearch = "|"
+                                for (let i = a = 0; i < map[0].length; a +=+ (stringsearch === map[x][i++])) {
+                                    
+                                    let a = a
+                                }
+                        
+                                if (a >= 2) {
+                                    HardIA();
+                                } else {
+                                    Number = 1;
+                                }
+                                
+                            }
+                            break;
+                        case 0:
+                            HardIA();
+                            break;
+                    }
+                    break;
+                case 2: 
+                    Number = 1;
                     break;
                 case 1:
                     for (x = 0; x < 5; x++) {
 
                         let stringsearch = "|"
-                        for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[x][i++])) {
+                        for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[x][i++])) {
                             
-                            var count = count
+                            let count = count
                         }
                 
                         if (count >= 2) {
-                            IA();
+                            MediumIA();
                         } else {
-                            nbrChiffre = 1;
+                            Number = 1;
                         }
                         
                     }
                     break;
-                case 0:
-                    IA();
-                    break;
             }
         }
 
-        if (count >= nbrChiffre) {
+        if (count >= Number) {
 
             console.log("Au tour de l'IA")
             await sleep(3000);
 
-            nbrAllumettes = nbrAllumettes - nbrChiffre
+            Ailumettes = Ailumettes - Number
 
-            for (let i = 0; i < map[nbrLignes].length; i++) {
+            for (let i = 0; i < map[Ligne].length; i++) {
 
-                if (map[nbrLignes][i].indexOf('|') != -1) {
+                if (map[Ligne][i].indexOf('|') != -1) {
             
-                    if (map[nbrLignes][i] == '|') {
+                    if (map[Ligne][i] == '|') {
             
-                        map[nbrLignes][i] = map[nbrLignes][i].replace('|', ' ');
+                        map[Ligne][i] = map[Ligne][i].replace('|', ' ');
             
                         function Counter() {
                             increment++;
@@ -327,7 +388,7 @@ async function IA() {
             
                         Counter();  
             
-                        if (increment === nbrChiffre) {
+                        if (increment === Number) {
                             increment = 0;
                             break;
                         }
@@ -335,92 +396,94 @@ async function IA() {
                 }
             }
 
-            if (nbrAllumettes <= 0) {
+            if (Ailumettes <= 0) {
 
+                console.log(`L'IA a retirée ${Number} allumettes`);
+                console.log(`Il reste ${Ailumettes} allumette(s)`);
                 console.log("Vous avez gagné !");
                 display(map);
                 rl.close();
-                return; 
                 
             } else {
                 
-                console.log(`L'IA a retirée ${nbrChiffre} allumettes`);
-                console.log(`Il reste ${nbrAllumettes} allumettes`);
+                console.log(`L'IA a retirée ${Number} allumettes`);
+                console.log(`Il reste ${Ailumettes} allumette(s)`);
                 await Jeu();
-                return; 
             }
         
         } else {
-            IA();
-            return;
+            MediumIA();
         }
 
     } else {
-        IA();
-        return;
+        MediumIA();
     }
 };
 
 
 async function HardIA() {
 
-    const nbrLignes = Math.floor(Math.random() * 4) +1 ;
-    let nbrChiffre = 0;
+    const Ligne = Math.floor(Math.random() * 4) +1 ;
+    let Number = 0;
 
     let stringsearch = "|"
-    for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
+    for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[Ligne][i++]));
     
-    var count = count;
+    count = count;
 
     if (count >= 1) {
-        switch (nbrAllumettes) {
-            case 15: case 13: case 11: case 9: case 7: case 1:
-                if (count >= 3) {
-                    nbrChiffre = 3;
-                } else {
-                    nbrChiffre = 1;
-                }
-                break;
-            case 14: case 12: case 10: case 8:
+        switch (Ailumettes) {
+            case 15: case 11: case 7:
                 if (count >= 2) {
-                    nbrChiffre = 2;
+                    Number = 2;
                 } else {
-                    nbrChiffre = 1;
+                    HardIA();
                 }
                 break;
-            case 6: case 2:
-                nbrChiffre = 1;
+            case 14: case 13: case 10: case 9: case 6: case 2: case 1:
+                Number = 1;
+                break;
+            case 12: case 8:
+                if (count >= 3) {
+                    Number = 3;
+                } else {
+                    HardIA;
+                }
                 break;
             case 5:
                 switch (count) {
-                    case 5: case 4: case 3: case 2:
-                        nbrChiffre = 1;
+                    case 5: case 4: case 2:
+                        Number = 1;
+                        break;
+                    case 3:
+                        Number = 2;
                         break;
                     case 1: case 0:
                         HardIA();
                         break;
                 }
+                break;
             case 4:
                 switch (count) {
                     case 4: case 3:
-                        nbrChiffre = 3;
+                        Number = 3;
                         break;
                     case 2:
-                        nbrChiffre = 1;
+                        Number = 1;
                         break;
                     case 1:
                         for (x = 0; x < 5; x++) {
 
                             let stringsearch = "|"
-                            for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[x][i++])) {
+                            for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[x][i++])) {
                                 
-                                var count = count
+                                count = count
                             }
                     
                             if (count >= 2) {
                                 HardIA();
                             } else {
-                                nbrChiffre = 1;
+                                Number = 1;
                             }
                             
                         }
@@ -429,24 +492,25 @@ async function HardIA() {
                         HardIA();
                         break;
                 }
+                break;
             case 3:
                 switch (count) {
                     case 3: case 2:
-                        nbrChiffre = 2;
+                        Number = 2;
                         break;
                     case 1:
                         for (x = 0; x < 5; x++) {
 
                             let stringsearch = "|"
-                            for (var i = a = 0; i < map[0].length; a +=+ (stringsearch === map[x][i++])) {
+                            for (let i = a = 0; i < map[0].length; a +=+ (stringsearch === map[x][i++])) {
                                 
-                                var a = a
+                                let a = a
                             }
                     
                             if (a >= 2) {
                                 HardIA();
                             } else {
-                                nbrChiffre = 1;
+                                Number = 1;
                             }
                             
                         }
@@ -455,22 +519,23 @@ async function HardIA() {
                         HardIA();
                         break;
                 }
+            break;
         }
 
-        if (count >= nbrChiffre) {
+        if (count >= Number) {
 
             console.log("Au tour de l'IA")
             await sleep(3000);
 
-            nbrAllumettes = nbrAllumettes - nbrChiffre
+            Ailumettes = Ailumettes - Number
 
-            for (let i = 0; i < map[nbrLignes].length; i++) {
+            for (let i = 0; i < map[Ligne].length; i++) {
 
-                if (map[nbrLignes][i].indexOf('|') != -1) {
+                if (map[Ligne][i].indexOf('|') != -1) {
             
-                    if (map[nbrLignes][i] == '|') {
+                    if (map[Ligne][i] == '|') {
             
-                        map[nbrLignes][i] = map[nbrLignes][i].replace('|', ' ');
+                        map[Ligne][i] = map[Ligne][i].replace('|', ' ');
             
                         function Counter() {
                             increment++;
@@ -478,7 +543,7 @@ async function HardIA() {
             
                         Counter();  
             
-                        if (increment === nbrChiffre) {
+                        if (increment === Number) {
                             increment = 0;
                             break;
                         }
@@ -486,27 +551,24 @@ async function HardIA() {
                 }
             }
 
-            if (nbrAllumettes <= 0) {
+            if (Ailumettes <= 0) {
 
+                console.log(`L'IA a retirée ${Number} allumettes`);
+                console.log(`Il reste ${Ailumettes} allumette(s)`);
                 console.log("Vous avez gagné !");
                 display(map);
-                rl.close();
-                return; 
-                
+                rl.close();                
             } else {
                 
-                console.log(`L'IA a retirée ${nbrChiffre} allumettes`);
-                console.log(`Il reste ${nbrAllumettes} allumettes`);
+                console.log(`L'IA a retirée ${Number} allumettes`);
+                console.log(`Il reste ${Ailumettes} allumette(s)`);
                 await Jeu();
-                return; 
             }
         } else {
             HardIA();
-            return;
         }
 
     } else {
         HardIA();
-        return;
     }
 };
