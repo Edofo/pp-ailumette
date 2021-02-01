@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "This is a game with matches",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
     "start": "node ./index.js"
   },

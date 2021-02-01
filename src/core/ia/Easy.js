@@ -1,50 +1,55 @@
 module.exports = async function EasyIA() {
 
-    const nbrLignes = Math.floor(Math.random() * 4) +1 ;
-    let nbrChiffre = 0;
+    const Ligne = Math.floor(Math.random() * 4) + 1;
+    let Number = 0;
 
     let stringsearch = "|"
-    for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
+    for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[Ligne][i++]));
     
-    var count = count;
+    count = count;
 
-    if (count <= 3 && count >= 1) {
-        nbrChiffre = Math.floor(Math.random() * count) +1 ;
-    } else {
-        nbrChiffre = Math.floor(Math.random() * 3) +1 ;
+    switch (count) {
+        case 7: case 6: case 5: case 4: case 3:
+            Number = Math.floor(Math.random() * 3) + 1;
+            break;
+        case 2: case 1:
+            Number = Math.floor(Math.random() * count) + 1;
+            break;
+        case 0:
+            EasyIA();
+            break;
     }
 
-    if (count >= nbrChiffre) {
+    if (count >= Number) {
 
         console.log("Au tour de l'IA")
         await sleep(3000);
 
-        nbrAllumettes = nbrAllumettes - nbrChiffre
+        Ailumettes = Ailumettes - Number
 
-        for (let i = 0; i < map[nbrLignes].length; i++) {
+        for (let i = 0; i < map[Ligne].length; i++) {
 
-            if (map[nbrLignes][i].indexOf('|') != -1) {
-        
-                if (map[nbrLignes][i] == '|') {
-        
-                    map[nbrLignes][i] = map[nbrLignes][i].replace('|', ' ');
-        
-                    function Counter() {
-                        increment++;
-                    }
-        
-                    Counter();  
-        
-                    if (increment === nbrChiffre) {
-                        increment = 0;
-                        break;
-                    }
+            if (map[Ligne][i].indexOf('|') != -1) {
+            
+                map[Ligne][i] = map[Ligne][i].replace('|', ' ');
+    
+                function Counter() {
+                    increment++;
+                }
+    
+                Counter();  
+    
+                if (increment === Number) {
+                    increment = 0;
+                    break;
                 }
             }
         }
 
-        if (nbrAllumettes <= 0) {
+        if (Ailumettes <= 0) {
 
+            console.log(`L'IA a retirée ${Number} allumettes`);
+            console.log(`Il reste ${Ailumettes} allumette(s)`);
             console.log("Vous avez gagné !");
             display(map);
             rl.close();
@@ -52,14 +57,12 @@ module.exports = async function EasyIA() {
             
         } else {
             
-            console.log(`L'IA a retirée ${nbrChiffre} allumettes`);
-            console.log(`Il reste ${nbrAllumettes} allumettes`);
-            await Jeu();
-            return; 
+            console.log(`L'IA a retirée ${Number} allumettes`);
+            console.log(`Il reste ${Ailumettes} allumette(s)`);
+            await Game();
         }
 
     } else {
         EasyIA();
-        return;
     }
 };

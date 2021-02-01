@@ -10,7 +10,7 @@ let increment = 0;
 let difficulty = 0;
 let count = 0;
 
-async function Afficher() {
+async function Play() {
 
     rl.question('Choisis une difficulté (1 = Facile / 2 = Normal / 3 = Difficile) : ', (value) => {
 
@@ -30,19 +30,19 @@ async function Afficher() {
                 
             }
 
-            Jeu();
+            Game();
 
         } else {
             console.error("Erreur : Vous devez choisir une difficulté entre 1 et 3")
-            Afficher();
+            Play();
         }
     });
 
 };
 
-Afficher();
+Play();
 
-async function Jeu() {
+async function Game() {
 
     display(map);
                 
@@ -108,7 +108,24 @@ function Player() {
                         
                         Ailumettes = Ailumettes - Number
 
-                        Game();
+                        for (let i = 0; i < map[Ligne].length; i++) {
+
+                            if (map[Ligne][i].indexOf('|') != -1) {
+                            
+                                map[Ligne][i] = map[Ligne][i].replace('|', ' ');
+                    
+                                function Counter() {
+                                    increment++;
+                                }
+                    
+                                Counter();  
+                    
+                                if (increment === Number) {
+                                    increment = 0;
+                                    break;
+                                }
+                            }
+                        }
 
                         if (Ailumettes == 0) {
 
@@ -140,19 +157,16 @@ function Player() {
                     } else {
                         console.error(`Erreur : Il n\'y a pas assez d\'allumettes`)
                         Player();
-                        return;
                     }
     
                 } else {
                     console.error(`Erreur : Il n\'y a pas assez d\'allumettes (il y a que ${count} allumettes)`);
                     Player();
-                    return;  
                 }
     
             } else {
                 console.error('Erreur : Vous devez choisir un chiffre entre 1 et 3');
                 Player();
-                return;  
             }
     
             });
@@ -160,32 +174,9 @@ function Player() {
         } else {
             console.error('Erreur : Vous devez choisir une ligne entre 1 et 4');
             Player();
-            return;
         }
     });
 };
-
-function Game() {
-    for (let i = 0; i < map[Ligne].length; i++) {
-
-        if (map[Ligne][i].indexOf('|') != -1) {
-        
-            map[Ligne][i] = map[Ligne][i].replace('|', ' ');
-
-            function Counter() {
-                increment++;
-            }
-
-            Counter();  
-
-            if (increment === Number) {
-                increment = 0;
-                break;
-            }
-        }
-    }
-}
-
 
 async function EasyIA() {
 
@@ -248,7 +239,7 @@ async function EasyIA() {
             
             console.log(`L'IA a retirée ${Number} allumettes`);
             console.log(`Il reste ${Ailumettes} allumette(s)`);
-            await Jeu();
+            await Game();
         }
 
     } else {
@@ -414,7 +405,7 @@ async function MediumIA() {
                 
                 console.log(`L'IA a retirée ${Number} allumettes`);
                 console.log(`Il reste ${Ailumettes} allumette(s)`);
-                await Jeu();
+                await Game();
             }
         
         } else {
@@ -568,7 +559,7 @@ async function HardIA() {
                 
                 console.log(`L'IA a retirée ${Number} allumettes`);
                 console.log(`Il reste ${Ailumettes} allumette(s)`);
-                await Jeu();
+                await Game();
             }
         } else {
             HardIA();

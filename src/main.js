@@ -1,12 +1,7 @@
-const Game = require('./core/Game');
-
-const Display = require('./core/Display');
-
+const Game = require('./core/Game')
 const readline = require('readline');
 
-let nbrAllumettes = 0;
-let difficulty = 0;
-let count = 0;
+
 
 let map = [
     /* 0 */['*', '*', '*', '*', '*', '*', '*', '*', '*'],
@@ -15,7 +10,7 @@ let map = [
     /* 3 */['*', ' ', '|', '|', '|', '|', '|', ' ', '*'],
     /* 4 */['*', '|', '|', '|', '|', '|', '|', '|', '*'],
     /* 5 */['*', '*', '*', '*', '*', '*', '*', '*', '*']
-];
+]; 
 
 function display(values) {
     const rows = values.length
@@ -25,13 +20,12 @@ function display(values) {
     }
 }
 
-async function Afficher() {
+async function Play() {
 
-    
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout
-    });
+    }); 
 
     rl.question('Choisis une difficulté (1 = Facile / 2 = Normal / 3 = Difficile) : ', (value) => {
 
@@ -47,7 +41,7 @@ async function Afficher() {
                     count = count
                 }
         
-                nbrAllumettes = nbrAllumettes + count
+                Ailumettes = Ailumettes + count
                 
             }
 
@@ -57,10 +51,10 @@ async function Afficher() {
 
         } else {
             console.error("Erreur : Vous devez choisir une difficulté entre 1 et 3")
-            Afficher();
+            Play();
         }
     });
 
 };
 
-Afficher();
+Play();

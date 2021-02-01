@@ -1,13 +1,10 @@
 const Player = require('./Player');
 
-
 function sleep(ms) {
     return new Promise((resolve) => {
       setTimeout(resolve, ms);
     });
 } 
-
-
 
 module.exports = async function Game() {
 

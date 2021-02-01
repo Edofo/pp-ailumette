@@ -1,11 +1,8 @@
 const EasyIA = require('./ia/Easy');
-const IA = require('./ia/Medium');
+const MediumIA = require('./ia/Medium');
 const HardIA = require('./ia/Hard');
 
 const readline = require('readline');
-
-
-let increment = 0;
 
 
 module.exports = async function Player() {
@@ -18,52 +15,49 @@ module.exports = async function Player() {
 
 
     rl.question('Choisis une ligne : ', (valueOne) => {
-        nbrLignes = parseInt(valueOne);
+        Ligne = parseInt(valueOne);
     
-        if (nbrLignes <= 4 && nbrLignes >= 1) {
-            console.log(`Ligne ${nbrLignes} confirmée`);
+        if (Ligne <= 4 && Ligne >= 1) {
+            console.log(`Ligne ${Ligne} confirmée`);
     
             rl.question('Choisis un chiffre : ', (valueTwo) => {
-            nbrChiffre = parseInt(valueTwo);
+            Number = parseInt(valueTwo);
             
-            if (nbrChiffre <= 3 && nbrChiffre >= 1) {
+            if (Number <= 3 && Number >= 1) {
 
                 let stringsearch = "|"
-                for (var i = count = 0; i < map[0].length; count +=+ (stringsearch === map[nbrLignes][i++]));
+                for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[Ligne][i++]));
                 
-                var count = count;
+                count = count;
 
-                if (count >= nbrChiffre) {
+                if (count >= Number) {
     
-                    if (nbrChiffre <= nbrAllumettes) {
+                    if (Number <= Ailumettes) {
         
-                        console.log(`Chiffre ${nbrChiffre} confirmé`);
+                        console.log(`Chiffre ${Number} confirmé`);
                         
-                        nbrAllumettes = nbrAllumettes - nbrChiffre
+                        Ailumettes = Ailumettes - Number
 
-                        for (let i = 0; i < map[nbrLignes].length; i++) {
+                        for (let i = 0; i < map[Ligne].length; i++) {
 
-                            if (map[nbrLignes][i].indexOf('|') != -1) {
-                        
-                                if (map[nbrLignes][i] == '|') {
-                        
-                                    map[nbrLignes][i] = map[nbrLignes][i].replace('|', ' ');
-                        
-                                    function Counter() {
-                                        increment++;
-                                    }
-                        
-                                    Counter();  
-                        
-                                    if (increment === nbrChiffre) {
-                                        increment = 0;
-                                        break;
-                                    }
+                            if (map[Ligne][i].indexOf('|') != -1) {
+                            
+                                map[Ligne][i] = map[Ligne][i].replace('|', ' ');
+                    
+                                function Counter() {
+                                    increment++;
+                                }
+                    
+                                Counter();  
+                    
+                                if (increment === Number) {
+                                    increment = 0;
+                                    break;
                                 }
                             }
                         }
 
-                        if (nbrAllumettes == 0) {
+                        if (Ailumettes == 0) {
 
                             console.log("Vous avez perdu");
                             display(map);
@@ -72,7 +66,7 @@ module.exports = async function Player() {
 
                         } else {
 
-                            console.log(`Il reste ${nbrAllumettes} allumettes`);
+                            console.log(`Il reste ${Ailumettes} allumette(s)`);
                             display(map);
 
                             switch (difficulty) {
@@ -80,7 +74,7 @@ module.exports = async function Player() {
                                     EasyIA();
                                     break;
                                 case '2' :
-                                    IA();
+                                    MediumIA();
                                     break;
                                 case '3' :
                                     HardIA();
@@ -93,19 +87,16 @@ module.exports = async function Player() {
                     } else {
                         console.error(`Erreur : Il n\'y a pas assez d\'allumettes`)
                         Player();
-                        return;
                     }
     
                 } else {
                     console.error(`Erreur : Il n\'y a pas assez d\'allumettes (il y a que ${count} allumettes)`);
                     Player();
-                    return;  
                 }
     
             } else {
                 console.error('Erreur : Vous devez choisir un chiffre entre 1 et 3');
                 Player();
-                return;  
             }
     
             });
@@ -113,7 +104,6 @@ module.exports = async function Player() {
         } else {
             console.error('Erreur : Vous devez choisir une ligne entre 1 et 4');
             Player();
-            return;
         }
     });
 };
