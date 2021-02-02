@@ -30,7 +30,7 @@ module.exports = async function MediumIA() {
                             Number = 2;
                             break;
                         case 1: case 0:
-                            HardIA();
+                            MediumIA();
                             break;
                     }
                     break;
@@ -52,7 +52,7 @@ module.exports = async function MediumIA() {
                                 }
                         
                                 if (count >= 2) {
-                                    HardIA();
+                                    MediumIA();
                                 } else {
                                     Number = 1;
                                 }
@@ -60,7 +60,7 @@ module.exports = async function MediumIA() {
                             }
                             break;
                         case 0:
-                            HardIA();
+                            MediumIA();
                             break;
                     }
                     break;
@@ -79,7 +79,7 @@ module.exports = async function MediumIA() {
                                 }
                         
                                 if (a >= 2) {
-                                    HardIA();
+                                    MediumIA();
                                 } else {
                                     Number = 1;
                                 }
@@ -87,7 +87,7 @@ module.exports = async function MediumIA() {
                             }
                             break;
                         case 0:
-                            HardIA();
+                            MediumIA();
                             break;
                     }
                     break;

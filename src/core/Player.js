@@ -21,83 +21,83 @@ module.exports = async function Player() {
             console.log(`Ligne ${Ligne} confirmée`);
     
             rl.question('Choisis un chiffre : ', (valueTwo) => {
-            Number = parseInt(valueTwo);
+                Number = parseInt(valueTwo);
             
-            if (Number <= 3 && Number >= 1) {
+                if (Number <= 3 && Number >= 1) {
 
-                let stringsearch = "|"
-                for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[Ligne][i++]));
-                
-                count = count;
+                    let stringsearch = "|"
+                    for (let i = count = 0; i < map[0].length; count +=+ (stringsearch === map[Ligne][i++]));
+                    
+                    count = count;
 
-                if (count >= Number) {
-    
-                    if (Number <= Ailumettes) {
+                    if (count >= Number) {
         
-                        console.log(`Chiffre ${Number} confirmé`);
-                        
-                        Ailumettes = Ailumettes - Number
-
-                        for (let i = 0; i < map[Ligne].length; i++) {
-
-                            if (map[Ligne][i].indexOf('|') != -1) {
+                        if (Number <= Ailumettes) {
+            
+                            console.log(`Chiffre ${Number} confirmé`);
                             
-                                map[Ligne][i] = map[Ligne][i].replace('|', ' ');
-                    
-                                function Counter() {
-                                    increment++;
-                                }
-                    
-                                Counter();  
-                    
-                                if (increment === Number) {
-                                    increment = 0;
-                                    break;
+                            Ailumettes = Ailumettes - Number
+
+                            for (let i = 0; i < map[Ligne].length; i++) {
+
+                                if (map[Ligne][i].indexOf('|') != -1) {
+                                
+                                    map[Ligne][i] = map[Ligne][i].replace('|', ' ');
+                        
+                                    function Counter() {
+                                        increment++;
+                                    }
+                        
+                                    Counter();  
+                        
+                                    if (increment === Number) {
+                                        increment = 0;
+                                        break;
+                                    }
                                 }
                             }
-                        }
 
-                        if (Ailumettes == 0) {
+                            if (Ailumettes == 0) {
 
-                            console.log("Vous avez perdu");
-                            display(map);
-                            rl.close();
-                            return; 
+                                console.log("Vous avez perdu");
+                                display(map);
+                                rl.close();
+                                return; 
 
+                            } else {
+
+                                console.log(`Il reste ${Ailumettes} allumette(s)`);
+                                display(map);
+
+                                switch (difficulty) {
+                                    case '1' :
+                                        EasyIA();
+                                        break;
+                                    case '2' :
+                                        MediumIA();
+                                        break;
+                                    case '3' :
+                                        HardIA();
+                                        break;
+                                    default:
+                                        console.error("Un problème est survenu !");
+                                }
+                                return; 
+                            }
                         } else {
-
-                            console.log(`Il reste ${Ailumettes} allumette(s)`);
-                            display(map);
-
-                            switch (difficulty) {
-                                case '1' :
-                                    EasyIA();
-                                    break;
-                                case '2' :
-                                    MediumIA();
-                                    break;
-                                case '3' :
-                                    HardIA();
-                                    break;
-                                default:
-                                    console.error("Un problème est survenu !");
-                            }
-                            return; 
+                            console.error(`Erreur : Il n\'y a pas assez d\'allumettes`)
+                            Player();
                         }
+        
                     } else {
-                        console.error(`Erreur : Il n\'y a pas assez d\'allumettes`)
+                        console.error(`Erreur : Il n\'y a pas assez d\'allumettes (il y a que ${count} allumettes)`);
                         Player();
                     }
-    
+        
                 } else {
-                    console.error(`Erreur : Il n\'y a pas assez d\'allumettes (il y a que ${count} allumettes)`);
+                    console.error('Erreur : Vous devez choisir un chiffre entre 1 et 3');
                     Player();
                 }
-    
-            } else {
-                console.error('Erreur : Vous devez choisir un chiffre entre 1 et 3');
-                Player();
-            }
     
             });
     
